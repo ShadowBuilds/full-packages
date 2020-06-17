@@ -9,6 +9,8 @@
 
 adduser --quiet --system --group "${INSTALLER_RUNTIME_USER}"
 
+chown "${INSTALLER_RUNTIME_USER}:${INSTALLER_RUNTIME_USER}" /var/lib/nats
+
 if [ -n "$INSTALLER_INSTALL_SYSTEMD" ]; then
   oIFS="$IFS"
   IFS=':'

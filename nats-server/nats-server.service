@@ -5,7 +5,7 @@ After=network-online.target time-sync.target
 [Service]
 Type=simple
 EnvironmentFile=-/etc/default/nats-server
-EnvironmentFile=-/etc/default/nats-server.d/*
+EnvironmentFile=-/etc/default/nats-server.d/*.conf
 # We ship with some .disabled files, rename to .conf to enable those.
 
 # nb: ${OPTIONS} would pass as one string, $OPTIONS splits on whitespace, and
