@@ -27,3 +27,29 @@ If you have a local clone of the git repo already on disk, then exporting
 clone, speeding up the git cloning and reducing network transfer volume.
 
 <!-- FIXME: also $COPY_PACKAGES_TO_DIR ?  Where do those go by default? -->
+
+## Using
+
+The nats-server should be installed and running by default.
+
+Two example tuning configs are installed, for administrators to as a
+(possibly complete) starting-point.
+
+To enable JetStream:
+
+```sh
+sudo mv /etc/default/nats-server.d/jetstream.disabled /etc/default/nats-server.d/jetstream.conf
+sudo systemctl restart nats-server
+```
+
+To use a config file `/etc/nats-server.conf` which you must create:
+
+```sh
+sudo mv /etc/default/nats-server.d/configfile.disabled /etc/default/nats-server.d/configfile.conf
+sudo systemctl restart nats-server
+```
+
+Note that both of those disabled files stomp on the `$OPTIONS` variable, so do
+not enable both.  You can use your own defaults file, working from those as a
+baseline, or you can just use a config file and enable jetstream inside that
+config file.
