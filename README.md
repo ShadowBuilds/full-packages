@@ -22,4 +22,8 @@ normally be sufficient; we extend it to `$SHALLOW_SINCE` to aid in recent
 rebuilds; this defaults to `2 days ago`; if doing builds long after a tag has
 been laid down, then `export SHALLOW_SINCE='35 days ago'` is a useful pattern.
 
+If you have a local clone of the git repo already on disk, then exporting
+`$REPO_REFERENCE` to point to that repository will result in a reference
+clone, speeding up the git cloning and reducing network transfer volume.
+
 <!-- FIXME: also $COPY_PACKAGES_TO_DIR ?  Where do those go by default? -->

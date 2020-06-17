@@ -41,6 +41,7 @@ fi
 # The Branch can also be a Tag (is just passed to git clone --branch)
 : "${BUILD_BRANCH:+used to use other than remote head}"
 : "${GIMME_GO_VERSION:+used to pre-install and use a different release of Go}"
+: "${REPO_REFERENCE:+path to a reference repo to reduce network copying}"
 
 # These should not need to be overridden
 : "${BUILD_ROOT:=${TMPDIR:-/tmp}/nats-build/$$}"
@@ -72,6 +73,9 @@ fi
 clone_args=(--depth 1 --single-branch)
 if [[ -n "${BUILD_BRANCH:-}" ]]; then
   clone_args+=(--branch "$BUILD_BRANCH")
+fi
+if [[ -n "${REPO_REFERENCE:-}" ]]; then
+  clone_args+=(--reference "$REPO_REFERENCE")
 fi
 clone_args+=( "${SERVER_REPO:?}" )
 
