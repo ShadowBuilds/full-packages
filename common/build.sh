@@ -89,6 +89,7 @@ fi
 clone_args+=( "$rel" )
 
 "$GIT_CMD" clone "${clone_args[@]}"
+"$GIT_CMD" -C "$rel" fetch --tags  # I haven't found a sane way to restrict this to recent tags
 "$GIT_CMD" -C "$rel" fetch --shallow-since "$SHALLOW_SINCE"
 
 if "$USE_GORELEASER"; then
@@ -148,7 +149,7 @@ popd
 if [[ -n "${COPY_BINARIES_TO_DIR:-}" ]]; then
   mkdir -pv -- "$COPY_BINARIES_TO_DIR"
   if "$USE_GORELEASER"; then
-    cp -vpR "$rel/dist/" "$COPY_BINARIES_TO_DIR/"
+    cp -vpR "$BUILD_ROOT/$rel/dist/" "$COPY_BINARIES_TO_DIR/"
   else
     cp -v "$BUILD_ROOT/$BINARY_NAME" "$COPY_BINARIES_TO_DIR/./"
   fi
