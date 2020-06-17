@@ -1,0 +1,2 @@
+# Enable Jetstream, set the Storage Directory
+OPTIONS=-js -sd /var/lib/nats

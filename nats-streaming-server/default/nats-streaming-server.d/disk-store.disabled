@@ -1,0 +1,1 @@
+OPTIONS=--store --dir=/var/lib/nats

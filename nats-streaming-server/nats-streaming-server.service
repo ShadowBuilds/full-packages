@@ -1,0 +1,43 @@
+[Unit]
+Description=NATS Streaming Server
+After=network-online.target time-sync.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/default/nats-streaming-server
+EnvironmentFile=-/etc/default/nats-streaming-server.d/*.conf
+
+# nb: ${OPTIONS} would pass as one string, $OPTIONS splits on whitespace, and
+# we want to allow multiple options, so are differing from
+# <https://wiki.debian.org/Teams/pkg-systemd/Packaging> here.
+ExecStart=/usr/sbin/nats-streaming-server $OPTIONS
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s SIGINT $MAINPID
+
+# We don't use DynamicUser, because we want to be able to resume data owned by
+# the user, in the case of JetStream.
+User=nats
+Group=nats
+WorkingDirectory=/var/lib/nats
+ReadWritePaths=/var/lib/nats
+
+RemoveIPC=true
+NoNewPrivileges=true
+MemoryDenyWriteExecute=true
+LockPersonality=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+ProtectSystem=strict
+PrivateTmp=true
+
+## This one is in Ubuntu 19.10 but not 18.04 LTS:
+# RestrictSUIDSGID=true
+## This one isn't even in Ubuntu 19.10:
+# ProtectKernelLogs=true
+
+[Install]
+Alias=nats-server.service
+WantedBy=multi-user.target
