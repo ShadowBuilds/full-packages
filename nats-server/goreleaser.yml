@@ -53,6 +53,7 @@ nfpms:
       "pkg/default/**": "/etc/default"
     scripts:
       postinstall: "pkg/scripts/postinstall.sh"
+      preremove: "pkg/scripts/preremove.sh"
 
 archives:
   - name_template: '{{.ProjectName}}-{{.Tag}}-{{.Os}}-{{.Arch}}{{if .Arm}}{{.Arm}}{{end}}'
