@@ -104,7 +104,7 @@ if "$USE_GORELEASER"; then
 
   if [[ -d default ]]; then
     mkdir -pv "$BUILD_ROOT/$rel/pkg/default"
-    cp -pR -- default/ "$BUILD_ROOT/$rel/pkg/default/./"
+    cp -pRv -- default/ "$BUILD_ROOT/$rel/pkg/default/./"
   fi
 
   pwd
@@ -112,6 +112,10 @@ if "$USE_GORELEASER"; then
   if [[ ${#svcs[@]} -gt 0 ]]; then
     mkdir -pv "$BUILD_ROOT/$rel/pkg/svc"
     cp -pv -- "${svcs[@]}" "$BUILD_ROOT/$rel/pkg/svc/./"
+    oIFS="$IFS"
+    IFS=':'
+    export INSTALLER_INSTALL_SYSTEMD="${svcs[*]}"
+    IFS="$oIFS"
   fi
 
   cp -v goreleaser.yml "$BUILD_ROOT/$rel/pkg/goreleaser.yml"
@@ -124,7 +128,7 @@ if "$USE_GORELEASER"; then
     for X in "${SCRIPTS_DIR:?}"/*; do
       Y="$BUILD_ROOT/$rel/pkg/scripts/$(basename "$X")"
       printf >&2 '+ subst %s -> %s\n' "$X" "$Y"
-      envsubst '$INSTALLER_RUNTIME_USER' < "$X" > "$Y"
+      envsubst '$INSTALLER_RUNTIME_USER $INSTALLER_INSTALL_SYSTEMD' < "$X" > "$Y"
       chmod 755 "$Y"
     done
   fi
