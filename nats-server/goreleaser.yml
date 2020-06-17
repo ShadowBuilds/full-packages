@@ -50,7 +50,7 @@ nfpms:
     files:
       "pkg/svc/*.service": "/lib/systemd/system"
     config_files:
-      "pkg/default/**": "/etc/default"
+      "pkg/default/*": "/etc/default"
     scripts:
       postinstall: "pkg/scripts/postinstall.sh"
       preremove: "pkg/scripts/preremove.sh"
