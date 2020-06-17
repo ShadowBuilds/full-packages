@@ -48,6 +48,7 @@ fi
 : "${BUILD_RELDIR:=$(basename "${SERVER_REPO:?}")}"
 : "${GIT_CMD:=git}"
 : "${GO_CMD:=go}"
+: "${KEEP_BUILD_TREE:=false}"
 if [[ -n "${NEED_USER:-}" ]]; then
   : "${NEED_SCRIPTS:=true}"
   : "${SCRIPTS_DIR:=../common/scripts}"
@@ -61,7 +62,9 @@ if [[ -d "$BUILD_ROOT" ]]; then die "BUILD_ROOT($BUILD_ROOT) must not already ex
 
 mkdir -pv -- "$BUILD_ROOT" || die "mkdir($BUILD_ROOT) failed $?"
 cleanup() { rm -fr -- "$BUILD_ROOT"; }
-trap cleanup EXIT
+if ! "$KEEP_BUILD_TREE"; then
+  trap cleanup EXIT
+fi
 
 cd "$BUILD_ROOT"
 

@@ -50,7 +50,8 @@ nfpms:
     files:
       "pkg/svc/*.service": "/lib/systemd/system"
     config_files:
-      "pkg/default/*": "/etc/default"
+      # FIXME: goreleaser is recording the directory, not the files placed into the directory, so we get an installation warning.
+      "pkg/default/nats-server.d/*": "/etc/default/nats-server.d/"
     scripts:
       postinstall: "pkg/scripts/postinstall.sh"
       preremove: "pkg/scripts/preremove.sh"
