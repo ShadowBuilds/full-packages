@@ -108,6 +108,7 @@ if "$USE_GORELEASER"; then
   if [[ -d default ]]; then
     mkdir -pv "$BUILD_ROOT/$rel/pkg/default"
     cp -pRv -- default/* "$BUILD_ROOT/$rel/pkg/default/./"
+    rm -fv -- "$BUILD_ROOT/$rel/pkg/default/README"
   fi
 
   pwd

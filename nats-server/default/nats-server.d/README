@@ -1,0 +1,4 @@
+Beware that entries placed here must also be explicitly listed in
+goreleaser.yml because the nfpm component of goreleaser doesn't well handle
+directories for config_files entries (install time warnings, files within not
+actually marked as config files).

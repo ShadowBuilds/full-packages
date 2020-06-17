@@ -50,8 +50,15 @@ nfpms:
     files:
       "pkg/svc/*.service": "/lib/systemd/system"
     config_files:
-      # FIXME: goreleaser is recording the directory, not the files placed into the directory, so we get an installation warning.
-      "pkg/default/nats-server.d/*": "/etc/default/nats-server.d/"
+      # NB: We want to use a glob, something like:
+      #   "pkg/default/nats-server.d/*": "/etc/default/nats-server.d/"
+      # but goreleaser records the directory as a config_file, not all the
+      # entries within it, which is not how deb works, so (1) we get
+      # installation warnings and (2) the files aren't actually marked as
+      # configs, so get removed on package deletion (which might be reasonable
+      # for .disabled files actually, so we might move those to `files` above?)
+      "pkg/default/nats-server.d/configfile.disabled": "/etc/default/nats-server.d/configfile.disabled"
+      "pkg/default/nats-server.d/jetstream.disabled": "/etc/default/nats-server.d/jetstream.disabled"
     scripts:
       postinstall: "pkg/scripts/postinstall.sh"
       preremove: "pkg/scripts/preremove.sh"
