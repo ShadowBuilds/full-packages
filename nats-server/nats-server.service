@@ -43,7 +43,8 @@ ProtectKernelLogs=true
 # IF nats is not reading credentials out of a user ~/.nsc directory then you
 # don't need access to /home at all and can use ProtectHome=yes;
 # if you need just one user, consider ProtectHome=tmpfs and
-# BindReadOnlyPaths=/home/that-user
+# BindReadOnlyPaths=/home/that-user/.nsc
+# (make it as specific as possible, to protect SSH sockets and semi-secrets)
 ProtectHome=read-only
 
 [Install]
