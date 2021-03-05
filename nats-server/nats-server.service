@@ -35,9 +35,9 @@ ProtectSystem=strict
 PrivateTmp=true
 
 ## This one is in Ubuntu 19.10 but not 18.04 LTS:
-# RestrictSUIDSGID=true
+RestrictSUIDSGID=true
 ## This one isn't even in Ubuntu 19.10:
-# ProtectKernelLogs=true
+ProtectKernelLogs=true
 
 [Install]
 Alias=nats-server.service
